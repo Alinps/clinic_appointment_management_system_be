@@ -2,11 +2,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import LoginSerializer
+from .serializers import ReceptionistCreateSerializer
 
 from .utls.custom_payload import get_tokens_for_user
+
+from .permissions import IsAdmin
+
+
+
+
+
 
 
 class LoginAPIView(APIView):
@@ -35,3 +42,39 @@ class LoginAPIView(APIView):
                 "role": user.role,
             }
         }, status=status.HTTP_200_OK)
+    
+
+
+
+
+
+
+class ReceptionistCreateAPIView(APIView):
+
+    permission_classes = [IsAdmin]
+
+    def post(self, request):
+
+        serializer = ReceptionistCreateSerializer(
+            data=request.data
+        )
+
+        serializer.is_valid(
+            raise_exception=True
+        )
+
+        receptionist = serializer.save()
+
+        return Response(
+            {
+                "success": True,
+                "message": "Receptionist created successfully",
+                "data": {
+                    "id": receptionist.id,
+                    "username": receptionist.username,
+                    "email": receptionist.email,
+                    "role": receptionist.role,
+                }
+            },
+            status=status.HTTP_201_CREATED
+        )
