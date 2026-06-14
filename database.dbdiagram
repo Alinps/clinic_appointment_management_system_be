@@ -1,0 +1,118 @@
+{
+  "version": "2.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "tablePositions": [
+      {
+        "name": "users",
+        "schemaName": "public",
+        "x": 226.47656759286093,
+        "y": -14.04321186747195
+      },
+      {
+        "name": "patients",
+        "schemaName": "public",
+        "x": 89.15735840955102,
+        "y": 386.8572581067363
+      },
+      {
+        "name": "doctors",
+        "schemaName": "public",
+        "x": 67.91112928228333,
+        "y": 841.8869160971421
+      },
+      {
+        "name": "doctor_availability",
+        "schemaName": "public",
+        "x": 760.8553174867574,
+        "y": 685.5164692925632
+      },
+      {
+        "name": "doctor_leave",
+        "schemaName": "public",
+        "x": 618.8410491097577,
+        "y": 301.3232508737855
+      },
+      {
+        "name": "appointments",
+        "schemaName": "public",
+        "x": 600.2694596682555,
+        "y": 965.0161805020488
+      },
+      {
+        "name": "clinic_settings",
+        "schemaName": "public",
+        "x": 468.527494470635,
+        "y": -14.04321186747195
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "doctors",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "doctor_id"
+        ],
+        "secondTableName": "doctor_availability",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "doctors",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "doctor_id"
+        ],
+        "secondTableName": "doctor_leave",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "patients",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "patient_id"
+        ],
+        "secondTableName": "appointments",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "doctors",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "doctor_id"
+        ],
+        "secondTableName": "appointments",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
+  },
+  "views": {}
+}

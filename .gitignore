@@ -1,0 +1,77 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment Variables
+.env
+.env.*
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Static Files
+staticfiles/
+
+# Media Files
+media/
+
+# Migrations (optional)
+# Uncomment if you don't want to track migrations
+# */migrations/*
+# !*/migrations/__init__.py
+
+# Pytest
+.pytest_cache/
+
+# Coverage Reports
+.coverage
+htmlcov/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Build Files
+build/
+dist/
+*.egg-info/
+
+# MyPy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# Django Debug Toolbar
+debug.log
+
+# Celery
+celerybeat-schedule
+
+# Redis Dump
+dump.rdb
