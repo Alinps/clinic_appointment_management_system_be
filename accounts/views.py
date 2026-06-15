@@ -13,7 +13,7 @@ from .permissions import IsAdmin
 
 
 
-
+    
 
 
 class LoginAPIView(APIView):
@@ -70,10 +70,10 @@ class ReceptionistCreateAPIView(APIView):
                 "success": True,
                 "message": "Receptionist created successfully",
                 "data": {
-                    "id": receptionist.id,
-                    "username": receptionist.username,
-                    "email": receptionist.email,
-                    "role": receptionist.role,
+                    "id": receptionist.id, # type: ignore
+                    "username": receptionist.username, # type: ignore
+                    "email": receptionist.email,# type: ignore
+                    "role": receptionist.role,# type: ignore
                 }
             },
             status=status.HTTP_201_CREATED
