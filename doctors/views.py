@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from accounts.permissions import IsAdmin
 
 from .models import Doctor
-from .serializers import DoctorCreateSerializer
+from .serializers import DoctorSerializer
 
 
 class DoctorCreateAPIView(APIView):
@@ -16,7 +16,7 @@ class DoctorCreateAPIView(APIView):
 
     def post(self, request):
 
-        serializer = DoctorCreateSerializer(data = request.data)
+        serializer = DoctorSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
 
         doctor = serializer.save()
@@ -43,7 +43,7 @@ class DoctorUpdateAPIView(APIView):
 
         doctor = get_object_or_404(Doctor, pk=pk)
 
-        serializer = DoctorCreateSerializer(doctor, data=request.data)
+        serializer = DoctorSerializer(doctor, data=request.data)
 
         serializer.is_valid(raise_exception=True)
 
@@ -66,7 +66,7 @@ class DoctorUpdateAPIView(APIView):
 
         doctor = get_object_or_404(Doctor, pk=pk)
 
-        serializer = DoctorCreateSerializer(doctor,data=request.data,partial=True)
+        serializer = DoctorSerializer(doctor,data=request.data,partial=True)
 
         serializer.is_valid(raise_exception=True)
 
@@ -106,3 +106,25 @@ class DoctorDeactivateAPIView(APIView):
         )
 
 
+
+
+class DoctorDetailAPIView(APIView):
+
+    permission_classes=[IsAdmin]
+
+    def get(self, request, pk):
+
+        doctor = get_object_or_404(Doctor, pk=pk)
+
+        serializer = DoctorSerializer(doctor)
+
+        return Response(
+            {
+                "success":True,
+                "data": serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
+    
+
+    
