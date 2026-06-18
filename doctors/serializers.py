@@ -31,3 +31,5 @@ class DoctorSerializer(serializers.ModelSerializer):
             )
 
         return value
+    
+
