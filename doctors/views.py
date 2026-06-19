@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from accounts.permissions import IsAdmin,IsAdminOrReceptionist
 
 from .models import Doctor
-from .serializers import DoctorSerializer
+from .serializers import DoctorSerializer, DoctorAvailabilitySerializer
 from .utils.pagination import BasePagination
 
 
@@ -177,6 +177,33 @@ class DoctorListAPIVIew(APIView):
         serializer = DoctorSerializer(paginated_queryset, many=True) # serializing the paginated data
 
         return paginator.get_paginated_response(serializer.data) 
+    
+
+
+class DoctorAvailabitlyCreateAPIView(APIView):
+
+    permission_classes=[IsAdmin]
+
+    def post(self, request, pk):
+
+        doctor = get_object_or_404(Doctor,pk=pk)
+        
+        serializer = DoctorAvailabilitySerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        availability = serializer.save(doctor = doctor)
+
+        return Response(
+            {
+                "success":True,
+                "message":"Doctor availability created successfully.",
+                "data":serializer.data
+            },
+            status=status.HTTP_201_CREATED
+        )
+
+
     
 
     

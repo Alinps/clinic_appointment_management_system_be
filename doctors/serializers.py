@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Doctor
+from .models import Doctor, DoctorAvailability
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -32,6 +32,36 @@ class DoctorSerializer(serializers.ModelSerializer):
 
         return value
     
+
+
+
+class DoctorAvailabilitySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        
+        model=DoctorAvailability
+        
+        fields=[
+            "id",
+            "working_day",
+            "start_time",
+            "end_time"
+        ]
+
+
+        def validate(self, attrs):
+
+            start_time = attrs["start_time"]
+            end_time = attrs["end_time"]
+
+            if start_time > end_time:
+                raise serializers.ValidationError(
+                    "End time must be greater than start time."
+                )
+            
+            return attrs
+
+
 
 
 

@@ -6,7 +6,8 @@ from .views import (
     DoctorDeactivateAPIView,
     DoctorActivateAPIView,
     DoctorDetailAPIView,
-    DoctorListAPIVIew
+    DoctorListAPIVIew,
+    DoctorAvailabitlyCreateAPIView
     
     )
 
@@ -16,5 +17,6 @@ urlpatterns = [
     path("<int:pk>/delete/",DoctorDeactivateAPIView.as_view(), name="doctor-delete"),
     path("<int:pk>/details/",DoctorDetailAPIView.as_view(), name="doctor-details"),
     path("<int:pk>/activate/",DoctorActivateAPIView.as_view(),name="doctor-activate"),
-    path("list/", DoctorListAPIVIew.as_view(), name="doctor-list")
+    path("list/", DoctorListAPIVIew.as_view(), name="doctor-list"),
+    path("<int:pk>/availability/",DoctorAvailabitlyCreateAPIView.as_view(),name="doctor-availability"),
 ]
