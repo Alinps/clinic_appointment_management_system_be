@@ -147,3 +147,24 @@ class PatientListAPIView(APIView):
 
         return paginator.get_paginated_response(serializer.data)
 
+
+
+class PatientDetailsAPIView(APIView):
+
+    permission_classes=[IsAdminOrReceptionist]
+
+    def get(self, request, pk):
+
+        patient = get_object_or_404(Patient,pk=pk)
+
+        serializer = PatientSerializer(patient)
+
+        return Response(
+            {
+                "success":True,
+                "data":serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
+
+
