@@ -21,4 +21,6 @@ class PatientSerializer(serializers.ModelSerializer):
             )
         return value
     
-    
+
+
+
