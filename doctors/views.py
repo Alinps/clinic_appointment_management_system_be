@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.utils import timezone
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -304,13 +305,47 @@ class DoctorLeaveListAPIView(APIView):
 
         queryset = DoctorLeave.objects.select_related("doctor").order_by("-start_leave_date")
 
+        date = request.query_params.get("date")
+
+        if date:
+
+            queryset = queryset.filter(
+                start_leave_date__lte=date,
+                end_leave_date__gte=date
+            )
+
+        start_date = request.query_params.get("start_date")
+        
+        end_date = request.query_params.get("end_date")
+
+
+        if start_date and end_date:
+
+            queryset = queryset.filter(
+                start_leave_date__lte=end_date,
+                end_leave_date__gte=start_date
+            )
+
+
+        today = request.query_params.get("today")
+
+        if today:
+
+            current_date = timezone.now().date()
+
+            queryset = queryset.filter(
+                start_leave_date__lte=current_date,
+                end_leave_date__gte=current_date
+            )
+
+
         search = request.query_params.get("search")
 
         if search:
 
             queryset = queryset.filter(
-                Q(doctor__name__icontains=search),
-                Q(doctor__doctor_id__icontains=search),
+                Q(doctor__name__icontains=search) |
+                Q(doctor__doctor_id__icontains=search) |
                 Q(doctor__specialization__icontains=search)
             )
 
