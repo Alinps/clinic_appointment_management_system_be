@@ -7,8 +7,8 @@ from rest_framework.views import APIView
 
 from accounts.permissions import IsAdmin,IsAdminOrReceptionist
 
-from .models import Doctor
-from .serializers import DoctorSerializer, DoctorAvailabilitySerializer
+from .models import Doctor, DoctorLeave
+from .serializers import DoctorSerializer, DoctorAvailabilitySerializer, DoctorLeaveSerializer
 from .utils.pagination import BasePagination
 
 
@@ -204,6 +204,126 @@ class DoctorAvailabitlyCreateAPIView(APIView):
         )
 
 
+
+class DoctorLeaveCreateAPIView(APIView):
+
+    permission_classes=[IsAdmin]
+
+    def post(self, request, pk):
+
+        doctor = get_object_or_404(Doctor, pk=pk)
+        print(request.data)
+
+        serializer = DoctorLeaveSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save(doctor=doctor)
+
+        return Response(
+            {
+                "success":True,
+                "message":"Leave marked successfully.",
+                "data":serializer.data
+            },
+            status=status.HTTP_201_CREATED
+        )
     
+
+class DoctorLeaveUpateAPIView(APIView):
+
+    permission_classes=[IsAdmin]
+
+    def put(self, request, pk):
+
+        doctorLeave = get_object_or_404(DoctorLeave, pk=pk)
+
+        serializer = DoctorLeaveSerializer(doctorLeave,data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(
+            {
+                "success":True,
+                "message":"Leave updated successfully.",
+                "data":serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
+    
+
+    def patch(self, request, pk):
+
+        doctorLeave = get_object_or_404(DoctorLeave,pk=pk)
+
+        serializer = DoctorLeaveSerializer(doctorLeave, data=request.data, partial=True)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(
+            {
+                "success":True,
+                "message":"Leave updated successfully.",
+                "data":serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
+
+
+
+class DoctorLeaveDeleteAPIView(APIView):
+
+    permission_classes=[IsAdmin]
+
+    def delete(self, request, pk):
+
+        doctorLeave = get_object_or_404(DoctorLeave,pk=pk)
+
+        doctorLeave.delete()
+
+        return Response(
+            {
+                "success":True,
+                "messgae":"Leave cancelled successfully"
+            },
+            status=status.HTTP_200_OK
+        )
+
+
+
+
+class DoctorLeaveListAPIView(APIView):
+
+    permission_classes = [IsAdmin]
+
+    def get(self, request):
+
+        queryset = DoctorLeave.objects.select_related("doctor").order_by("-start_leave_date")
+
+        search = request.query_params.get("search")
+
+        if search:
+
+            queryset = queryset.filter(
+                Q(doctor__name__icontains=search),
+                Q(doctor__doctor_id__icontains=search),
+                Q(doctor__specialization__icontains=search)
+            )
+
+        paginator = BasePagination()
+
+        paginated_queryset = paginator.paginate_queryset(queryset, request)
+
+        serializer = DoctorLeaveSerializer(paginated_queryset, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
+
+
+
+
 
     

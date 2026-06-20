@@ -7,7 +7,11 @@ from .views import (
     DoctorActivateAPIView,
     DoctorDetailAPIView,
     DoctorListAPIVIew,
-    DoctorAvailabitlyCreateAPIView
+    DoctorAvailabitlyCreateAPIView,
+    DoctorLeaveCreateAPIView,
+    DoctorLeaveUpateAPIView,
+    DoctorLeaveDeleteAPIView,
+    DoctorLeaveListAPIView
     
     )
 
@@ -19,4 +23,8 @@ urlpatterns = [
     path("<int:pk>/activate/",DoctorActivateAPIView.as_view(),name="doctor-activate"),
     path("list/", DoctorListAPIVIew.as_view(), name="doctor-list"),
     path("<int:pk>/availability/",DoctorAvailabitlyCreateAPIView.as_view(),name="doctor-availability"),
+    path("<int:pk>/leave/", DoctorLeaveCreateAPIView.as_view(), name="doctor-leave"),
+    path("<int:pk>/leave/update/", DoctorLeaveUpateAPIView.as_view(), name="doctor-leave-update"),
+    path("<int:pk>/leave/delete/",DoctorLeaveDeleteAPIView.as_view(), name="doctor-leave-cancel"),
+    path("leave/list/", DoctorLeaveListAPIView.as_view(), name="doctor-leave-list")
 ]

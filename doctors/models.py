@@ -152,7 +152,9 @@ class DoctorLeave(models.Model):
         related_name="leaves"
     )
 
-    leave_date = models.DateField()
+    start_leave_date = models.DateField()
+
+    end_leave_date = models.DateField()
 
     reason = models.TextField()
 
@@ -168,11 +170,11 @@ class DoctorLeave(models.Model):
 
         db_table = "doctor_leaves"
 
-        ordering = ["-leave_date"]
+        ordering = ["-start_leave_date"]
 
         constraints = [
             models.UniqueConstraint(
-                fields=["doctor", "leave_date"],
+                fields=["doctor", "start_leave_date","end_leave_date"],
                 name="unique_doctor_leave_date"
             )
         ]
@@ -181,5 +183,5 @@ class DoctorLeave(models.Model):
 
         return (
             f"{self.doctor.name} - "
-            f"{self.leave_date}"
+            f"{self.start_leave_date}"
         )

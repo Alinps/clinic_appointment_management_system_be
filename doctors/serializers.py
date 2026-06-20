@@ -1,6 +1,8 @@
+from django.utils import timezone
+
 from rest_framework import serializers
 
-from .models import Doctor, DoctorAvailability
+from .models import Doctor, DoctorAvailability, DoctorLeave
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -60,6 +62,65 @@ class DoctorAvailabilitySerializer(serializers.ModelSerializer):
                 )
             
             return attrs
+        
+
+
+class DoctorLeaveSerializer(serializers.ModelSerializer):
+
+
+    doctor = DoctorSerializer(read_only=True)
+
+    class Meta:
+        model = DoctorLeave
+        fields = [
+            "id",
+            "doctor",
+            "start_leave_date",
+            "end_leave_date",
+            "reason",
+            "created_at",
+            "updated_at"
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "doctor"
+        ]
+
+    def validate_start_leave_date(self, value):
+
+        if value < timezone.now().date():
+            raise serializers.ValidationError(
+                "Start Leave date cannot be in a past."
+            )
+        return value
+    
+    def validate_end_leave_date(self, value):
+
+        if value < timezone.now().date():
+            raise serializers.ValidationError(
+                "End Leave date cannot be in a past."
+            )
+        return value
+        
+    def validate(self, attrs):
+
+        start_leave_date = attrs.get("start_leave_date")
+        end_leave_date = attrs.get("end_leave_date")
+
+        if start_leave_date and end_leave_date:
+
+            if end_leave_date < start_leave_date:
+
+                raise serializers.ValidationError(
+                    {
+                        "end_leave_date":"End leave date must be greater than or equal to start leave date."
+                    }
+                )
+        return attrs
+
 
 
 
