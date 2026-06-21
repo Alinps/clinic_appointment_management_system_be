@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 
+
 User = get_user_model()
 
 class LoginSerializer(serializers.Serializer):
@@ -59,3 +60,6 @@ class ReceptionistCreateSerializer(serializers.ModelSerializer):
         receptionist.save()
 
         return receptionist
+    
+
+

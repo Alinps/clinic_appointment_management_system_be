@@ -25,5 +25,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path("api/doctors/",include("doctors.urls")),
     path("api/patients/",include("patients.urls")),
+    path("api/dashboard/", include("dashboard.urls")),
     path("token/refresh/",TokenRefreshView.as_view(),name="token_refresh"),
 ]
